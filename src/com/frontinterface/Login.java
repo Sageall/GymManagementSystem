@@ -5,26 +5,33 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.*;
 
-public class Login {
-    private JTextField Username;
-    private JButton Login;
-    private JButton Exit;
-    private JTextField Password;
+public class Login extends JFrame{
+    private javax.swing.JTextField Username;
+    private javax.swing.JButton LoginBtn;
+    private javax.swing.JButton ExitBtn;
+    private javax.swing.JTextField Password;
+    private javax.swing.JPanel MainPanel;
 
     public Login() {
-        Login.addActionListener(new ActionListener() {
+        MainPanel.setVisible(true);
+        LoginBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String un=Username.getText();
                 String pass=Password.getText();
                 try {
-                    Class.forName("com.mysql.jdbc.Driver");
-                    Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/gym",un,pass);
-                    Successful s=new Successful();
-                    s.setVisible(true);
-                    //Login.dispose();
-                }
-                catch(Exception ex) {
+                    Class.forName("com.mysql.cj.jdbc.Driver");
+                    Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/gym", un, pass);
+                    JOptionPane optionPane = new JOptionPane("Successful");
+                    JDialog dialog = optionPane.createDialog("Welcome.");
+                    dialog.setAlwaysOnTop(true);
+                    dialog.setVisible(true);
+                } catch (ClassNotFoundException ex) {
+                    JOptionPane optionPane = new JOptionPane("ErrorMsg", JOptionPane.ERROR_MESSAGE);
+                    JDialog dialog = optionPane.createDialog("Failure");
+                    dialog.setAlwaysOnTop(true);
+                    dialog.setVisible(true);
+                } catch (SQLException ex) {
                     JOptionPane optionPane = new JOptionPane("ErrorMsg", JOptionPane.ERROR_MESSAGE);
                     JDialog dialog = optionPane.createDialog("Failure");
                     dialog.setAlwaysOnTop(true);
@@ -32,11 +39,19 @@ public class Login {
                 }
             }
         });
-        Exit.addActionListener(new ActionListener() {
+        ExitBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.exit(0);
             }
         });
+    }
+
+    public static void main(String args[]) {
+        JFrame frame=new JFrame("Login");
+        frame.setContentPane(new Login().MainPanel);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.pack();
+        frame.setVisible(true);
     }
 }
