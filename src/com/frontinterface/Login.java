@@ -13,7 +13,6 @@ public class Login extends JFrame{
     private javax.swing.JPanel MainPanel;
 
     public Login() {
-        MainPanel.setVisible(true);
         LoginBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -22,10 +21,12 @@ public class Login extends JFrame{
                 try {
                     Class.forName("com.mysql.cj.jdbc.Driver");
                     Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/gym", un, pass);
-                    JOptionPane optionPane = new JOptionPane("Successful");
-                    JDialog dialog = optionPane.createDialog("Welcome.");
-                    dialog.setAlwaysOnTop(true);
-                    dialog.setVisible(true);
+                    Successful su=new Successful();
+                    dispose();
+                    //JOptionPane optionPane = new JOptionPane("Successful");
+                    //JDialog dialog = optionPane.createDialog("Welcome.");
+                    //dialog.setAlwaysOnTop(true);
+                    //dialog.setVisible(true);
                 } catch (ClassNotFoundException ex) {
                     JOptionPane optionPane = new JOptionPane("ErrorMsg", JOptionPane.ERROR_MESSAGE);
                     JDialog dialog = optionPane.createDialog("Failure");
@@ -48,10 +49,10 @@ public class Login extends JFrame{
     }
 
     public static void main(String args[]) {
-        JFrame frame=new JFrame("Login");
-        frame.setContentPane(new Login().MainPanel);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setVisible(true);
+        JFrame lframe=new JFrame("Login");
+        lframe.setContentPane(new Login().MainPanel);
+        lframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        lframe.pack();
+        lframe.setVisible(true);
     }
 }
